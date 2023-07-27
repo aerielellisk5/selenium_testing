@@ -39,6 +39,37 @@
 
 
 
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+options = webdriver.ChromeOptions()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+service_obj = Service("/opt/homebrew/bin/chromedriver")
+# chrome driver will open the browser
+driver = webdriver.Chrome(service=service_obj, options=options)
+
+# Regular Selectors
+driver.get("https://rahulshettyacademy.com/angularpractice/")
+driver.find_element(By.NAME, "email").send_keys("hello@gmail.com")
+driver.find_element(By.ID, 'exampleInputPassword1').send_keys("123456")
+driver.find_element(By.ID, "exampleCheck1").click()
+
+# XPATH Selectors
+# //tagname[@attribute='value'] --> //input[@type='submit]
+driver.find_element(By.XPATH, "//input[@type='submit']").click()
+message = driver.find_element(By.CLASS_NAME, "alert-success").text
+print(message)
+
+# CSS Selectors
+# tagname[attribute='value']
+driver.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Aeriel")
+
+assert "Success" in message
+# if this fails, it will give an "Assertion Error" in the console
+
+driver.close()
+
 
 
 
