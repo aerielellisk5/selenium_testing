@@ -42,6 +42,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 options = webdriver.ChromeOptions()
 options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
@@ -50,25 +51,58 @@ service_obj = Service("/opt/homebrew/bin/chromedriver")
 driver = webdriver.Chrome(service=service_obj, options=options)
 
 # Regular Selectors
+
+
 driver.get("https://rahulshettyacademy.com/angularpractice/")
+
 driver.find_element(By.NAME, "email").send_keys("hello@gmail.com")
 driver.find_element(By.ID, 'exampleInputPassword1').send_keys("123456")
 driver.find_element(By.ID, "exampleCheck1").click()
 
 # XPATH Selectors
 # //tagname[@attribute='value'] --> //input[@type='submit]
+driver.find_element(By.CSS_SELECTOR, 'input[name]').send_keys("Aeriel heres the first")
+# driver.find_element(By.CSS_SELECTOR,"inlineradio1").click()
 driver.find_element(By.XPATH, "//input[@type='submit']").click()
+
 message = driver.find_element(By.CLASS_NAME, "alert-success").text
 print(message)
 
 # CSS Selectors
 # tagname[attribute='value']
-driver.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Aeriel")
+#  #id
+#  .class-name
+driver.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Aeriel heres the second")
+
+
+
+# working with static dropdowns
+dropdown = Select(driver.find_element(By.ID, "exampleFormControlSelect1"))
+# dropdown.select_by_index(0) --> male
+dropdown.select_by_visible_text("Female")
+# dropdown.select_by_value()
+
+
+
+
+
+
+
 
 assert "Success" in message
 # if this fails, it will give an "Assertion Error" in the console
 
-driver.close()
+
+driver.find_element(By.XPATH, "(//input[@type='text'])[3]")
+driver.find_element(By.XPATH, "(//input[@type='text'])[3]").clear()
+
+
+
+
+
+
+
+# driver.close()
 
 
 
