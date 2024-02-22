@@ -60,26 +60,38 @@ driver.find_element(By.ID, 'exampleInputPassword1').send_keys("123456")
 driver.find_element(By.ID, "exampleCheck1").click()
 
 # XPATH Selectors
-# //tagname[@attribute='value'] --> //input[@type='submit]
-driver.find_element(By.CSS_SELECTOR, 'input[name]').send_keys("Aeriel heres the first")
-# driver.find_element(By.CSS_SELECTOR,"inlineradio1").click()
+# //tagname[@attribute='value'] --> //input[@type='submit']
+
+
+
+#Xpath - //tagname[@attribute='value']
+#CSS - tagname[attribute='value']
+driver.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Aeriel")
+driver.find_element(By.CSS_SELECTOR, "#inlineRadio1").click()
 driver.find_element(By.XPATH, "//input[@type='submit']").click()
 
-message = driver.find_element(By.CLASS_NAME, "alert-success").text
+message = driver.find_element(By.CLASS_NAME, 'alert-success').text
 print(message)
+assert "Success" in message
+
+driver.find_element(By.XPATH, "(//input[@type='text'])[3]").send_keys("hellowworld")
+driver.find_element(By.XPATH, "(//input[@type='text'])[3]").clear()
+
+
+
 
 # CSS Selectors
 # tagname[attribute='value']
 #  #id
 #  .class-name
-driver.find_element(By.CSS_SELECTOR, "input[name='name']").send_keys("Aeriel heres the second")
+
 
 
 
 # working with static dropdowns
-dropdown = Select(driver.find_element(By.ID, "exampleFormControlSelect1"))
+
 # dropdown.select_by_index(0) --> male
-dropdown.select_by_visible_text("Female")
+
 # dropdown.select_by_value()
 
 
@@ -89,12 +101,6 @@ dropdown.select_by_visible_text("Female")
 
 
 
-assert "Success" in message
-# if this fails, it will give an "Assertion Error" in the console
-
-
-driver.find_element(By.XPATH, "(//input[@type='text'])[3]")
-driver.find_element(By.XPATH, "(//input[@type='text'])[3]").clear()
 
 
 
@@ -102,7 +108,8 @@ driver.find_element(By.XPATH, "(//input[@type='text'])[3]").clear()
 
 
 
-# driver.close()
+
+driver.close()
 
 
 
