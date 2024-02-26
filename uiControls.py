@@ -39,3 +39,32 @@ service_obj = Service("/opt/homebrew/bin/chromedriver")
 driver = webdriver.Chrome(service=service_obj, options=options)
 driver.get("https://rahulshettyacademy.com/AutomationPractice/")
 
+checkboxes = driver.find_elements(By.XPATH, "//input[@type='checkbox']")
+
+# print(len(checkboxes))
+
+# for checkbox in checkboxes:
+#     # print(checkbox)
+#     if checkbox.get_attribute("value") == "option2":
+#         # checkbox.click()
+#         assert checkbox.is_selected()
+#         break
+    
+radioButtons = driver.find_elements(By.XPATH, "//input[@type='radio']")
+
+for radioButton in radioButtons:
+    if radioButton.get_attribute("value") == "radio2":
+        radioButton.click()
+        assert radioButton.is_selected()
+
+
+# show/hide example
+assert driver.find_element(By.ID, "displayed-text").is_displayed()
+driver.find_element(By.ID, "hide-textbox").click()
+assert not driver.find_element(By.ID, "displayed-text").is_displayed()
+
+
+
+
+
+# driver.close()

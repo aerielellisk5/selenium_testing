@@ -30,15 +30,17 @@ service_obj = Service("/opt/homebrew/bin/chromedriver")
 driver = webdriver.Chrome(service=service_obj, options=options)
 driver.get("https://rahulshettyacademy.com/AutomationPractice/")
 
-name = "Aeriel"
 
-driver.find_element(By.CSS_SELECTOR, "#name").send_keys(name)
+name = "Aeriel"
+driver.find_element(By.ID, "name").send_keys(name)
 driver.find_element(By.ID, "alertbtn").click()
 alert = driver.switch_to.alert
-alerttxt = alert.text
-print(alerttxt)
-assert name in alerttxt
-alert.accept() #will click on okay
-# alert.dismiss() dismiss/cancel
-driver.close()
+alertText = alert.text
+print(alertText)
+alert.accept()
 
+assert name in alertText
+
+
+# alert.accept will click on OK
+# alert.dismiss() will click on Dismiss
