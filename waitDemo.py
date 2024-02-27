@@ -53,24 +53,29 @@ options = webdriver.ChromeOptions()
 options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 service_obj = Service("/opt/homebrew/bin/chromedriver")
 driver = webdriver.Chrome(service=service_obj, options=options)
+driver.implicitly_wait(5)
+# driver will wait max 5 seconds to wait for an element to appear on the page
 driver.get("https://rahulshettyacademy.com/seleniumPractise/#/")
-driver.implicitly_wait(5) #max timeout
-
 
 driver.find_element(By.CSS_SELECTOR, ".search-keyword").send_keys("ber")
 time.sleep(2)
-results_of_products = driver.find_elements(By.XPATH, "//div[@class='products']/div")
-count = len(results_of_products)
-assert count > 0
+results = driver.find_elements(By.XPATH, "//div[@class='products']/div")
+# print(len(results))
+# assert count > 3
 
-# chaining method in selenium
-for result in results_of_products:
+for result in results:
     result.find_element(By.XPATH, "div/button").click()
 
 driver.find_element(By.CSS_SELECTOR, "img[alt='Cart']").click()
 driver.find_element(By.XPATH, "//button[text()='PROCEED TO CHECKOUT']").click()
+# driver.find_element(By.XPATH, "//input[@type='text']").send_keys("rahulshettyacademy")
+# getting an error that element is not interactable?
+# time.sleep(1)
+driver.find_element(By.CSS_SELECTOR, ".promoCode").send_keys("rahulshettyacademy")
+driver.find_element(By.XPATH, "//button[text()='Apply']").click()
 
-driver.find_element(By.CSS_SELECTOR,".promoCode").send_keys("rahulshettyacademy")
-driver.find_element(By.CSS_SELECTOR, ".promoBtn").click()
+confirmation = driver.find_element(By.CLASS_NAME, "promoInfo")
+assert confirmation.is_displayed()
+
 
     

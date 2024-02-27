@@ -58,7 +58,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.support.wait import WebDriverWait
 options = webdriver.ChromeOptions()
@@ -79,20 +79,54 @@ assert count > 0
 for result in results_of_products:
     result.find_element(By.XPATH, "div/button").click()
 
+# Create a list of expected list of the prodcut text
+
+groceryList = []
+    
+for itemName in results_of_products:
+    item = itemName.find_element(By.XPATH, "h4").text
+    # print(item)
+    groceryList.append(item)
+    print(groceryList)
+
 driver.find_element(By.CSS_SELECTOR, "img[alt='Cart']").click()
 driver.find_element(By.XPATH, "//button[text()='PROCEED TO CHECKOUT']").click()
+wait = WebDriverWait(driver, 10)
+wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".promoCode")))
 
+# WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".promoCode")))
 driver.find_element(By.CSS_SELECTOR,".promoCode").send_keys("rahulshettyacademy")
 driver.find_element(By.CSS_SELECTOR, ".promoBtn").click()
-wait = WebDriverWait(driver, 10)
-print(driver.find_element(By.CLASS_NAME, "promoInfo").text)
-wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".promoInfo")))
-print(driver.find_element(By.CLASS_NAME, "promoInfo").text)
+
+# print(driver.find_element(By.CLASS_NAME, "promoInfo").text)
 
 
 
 
+### Sum Validation
+prices = driver.find_elements(By.CSS_SELECTOR, "tr td:nth-child(5) p")
+total = int(driver.find_element(By.CSS_SELECTOR, ".totAmt").text)
+print(total)
+sum = 0
 
+
+for price in prices:
+    sum = sum + int(price.text)
+    # print(sum)
+    # print(total)
+
+assert sum == total
+
+wait = WebDriverWait(driver, 15)
+wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".discountAmt")))
+
+#  Need to write code to test that Total Amount is always more than total after discount
+
+time.sleep(10)
+discountedTotal = float(driver.find_element(By.CSS_SELECTOR, ".discountAmt").text)
+print(discountedTotal)
+
+assert total > discountedTotal
 
 
 
